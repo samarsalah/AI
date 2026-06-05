@@ -3,7 +3,6 @@
 import shutil
 from pathlib import Path
 
-from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -14,18 +13,9 @@ from src.config import (
     CHUNK_SIZE,
     COLLECTION_NAME,
     CORPUS_DIR,
-    EMBEDDING_MODEL,
 )
 from src.document_loader import load_corpus
-
-
-def get_embeddings() -> HuggingFaceEmbeddings:
-    """Free local embedding model — no API key required."""
-    return HuggingFaceEmbeddings(
-        model_name=EMBEDDING_MODEL,
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
-    )
+from src.embeddings import get_embeddings
 
 
 def chunk_documents(documents: list[Document]) -> list[Document]:

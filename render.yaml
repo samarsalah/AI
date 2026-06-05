@@ -13,3 +13,7 @@ services:
         sync: false
       - key: PYTHON_VERSION
         value: "3.12.8"
+      - key: EMBEDDING_BACKEND
+        value: onnx
+      - key: PRELOAD_PIPELINE
+        value: "true"
