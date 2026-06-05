@@ -4,7 +4,6 @@ import os
 
 from chromadb.utils.embedding_functions import ONNXMiniLM_L6_V2
 from langchain_core.embeddings import Embeddings
-from langchain_community.embeddings import HuggingFaceEmbeddings
 
 from src.config import EMBEDDING_MODEL
 
@@ -26,6 +25,8 @@ def get_embeddings() -> Embeddings:
     """Return embedding model. Use ONNX on Render to avoid OOM."""
     backend = os.getenv("EMBEDDING_BACKEND", "onnx").lower()
     if backend == "huggingface":
+        from langchain_community.embeddings import HuggingFaceEmbeddings
+
         return HuggingFaceEmbeddings(
             model_name=EMBEDDING_MODEL,
             model_kwargs={"device": "cpu"},
