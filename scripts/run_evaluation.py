@@ -1,11 +1,15 @@
 """Run Phase 4 evaluation: groundedness, citation accuracy, and latency."""
 
 import json
+import random
 import re
 import statistics
 import sys
 import time
 from pathlib import Path
+
+# Fixed seed for reproducible evaluation sampling and tie-breaking
+random.seed(42)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 

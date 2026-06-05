@@ -1,7 +1,11 @@
 """Application configuration loaded from environment variables."""
 
 import os
+import random
 from pathlib import Path
+
+# Fixed seed for reproducible behavior where randomness is used
+random.seed(42)
 
 from dotenv import load_dotenv
 

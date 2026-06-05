@@ -43,6 +43,10 @@ AI/
 ├── tests/
 │   └── test_rag.py
 ├── requirements.txt
+├── design-and-evaluation.md
+├── ai-tooling.md
+├── deployed.md
+├── demo-script.md
 └── README.md
 ```
 
@@ -63,7 +67,7 @@ AI/
 | Requirement | Status |
 |-------------|--------|
 | Parse and clean policy documents | ✅ `src/document_loader.py` |
-| Chunk text and embed (free-tier model) | ✅ `all-MiniLM-L6-v2` (local, free) |
+| Chunk text and embed (free-tier model) | ✅ ONNX `all-MiniLM-L6-v2` (local, free) |
 | Store vectors in ChromaDB | ✅ `chroma_db/` |
 | Top-k retrieval system | ✅ `PolicyRAGPipeline.retrieve()` |
 | Prompt with chunks + citations | ✅ `src/rag_pipeline.py` |
@@ -115,7 +119,7 @@ pip install -r requirements.txt
 Copy `.env.example` to `.env` and configure:
 
 ```env
-# Embeddings are FREE and local (sentence-transformers) — no key needed
+# Embeddings are FREE and local (ONNX MiniLM) — no key needed
 
 # LLM — pick ONE provider:
 OPENAI_API_KEY=your_key_here
@@ -218,7 +222,7 @@ python scripts/ingest_corpus.py
 This will:
 - Parse and clean all files in `corpus/`
 - Chunk text (1000 chars, 200 overlap) respecting Markdown headings
-- Embed chunks with **free local** `all-MiniLM-L6-v2` (no API key)
+- Embed chunks with **free local ONNX** `all-MiniLM-L6-v2` (no API key)
 - Store vectors in `chroma_db/`
 
 ### 2. Start the API
@@ -283,13 +287,18 @@ EMBEDDING_BACKEND=onnx python scripts/run_evaluation.py
 pytest tests/ -v
 ```
 
+## Deployed Application
+
+See [deployed.md](deployed.md) for the live URL, endpoints, and Render configuration.
+
 ## Tech Stack
 
 - **Flask** — Web API
 - **LangChain** — RAG orchestration
 - **ChromaDB** — Local vector store
-- **sentence-transformers** — Free local embeddings
-- **OpenAI / Groq / OpenRouter** — LLM completions
+- **ONNX MiniLM-L6-v2** — Free local embeddings (via Chroma ONNX runtime)
+- **Groq** — LLM completions (`llama-3.3-70b-versatile`)
+- **Gunicorn** — Production WSGI server
 - **Pytest** — Testing
 
 ## License
