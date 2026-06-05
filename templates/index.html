@@ -159,10 +159,29 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message }),
         });
-        const data = await response.json();
+
+        const raw = await response.text();
+        let data = {};
+        if (raw) {
+          try {
+            data = JSON.parse(raw);
+          } catch {
+            throw new Error(
+              response.status === 502
+                ? "Server timed out (cold start). Wait 30 seconds and try again."
+                : `Invalid server response (${response.status}).`
+            );
+          }
+        } else {
+          throw new Error(
+            response.status === 502
+              ? "Server timed out (cold start). Wait 30 seconds and try again."
+              : `Empty server response (${response.status}).`
+          );
+        }
 
         if (!response.ok) {
-          throw new Error(data.error || "Request failed");
+          throw new Error(data.error || `Request failed (${response.status})`);
         }
 
         answerEl.textContent = data.answer;

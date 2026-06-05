@@ -1,5 +1,6 @@
 """Flask web app and API for the policy RAG assistant."""
 
+import logging
 import os
 
 from flask import Flask, jsonify, render_template, request
@@ -10,6 +11,7 @@ from src.ingest import build_vector_store, load_vector_store
 from src.rag_pipeline import PolicyRAGPipeline
 
 app = Flask(__name__)
+logger = logging.getLogger(__name__)
 _pipeline: PolicyRAGPipeline | None = None
 
 
@@ -68,8 +70,27 @@ def chat():
         ), 503
     except ValueError as exc:
         return jsonify({"error": str(exc)}), 503
+    except Exception as exc:
+        logger.exception("Chat request failed")
+        return jsonify({"error": f"Server error: {exc}"}), 500
 
     return jsonify(format_chat_response(result))
+
+
+def preload_pipeline() -> None:
+    """Warm up the RAG pipeline on startup to avoid first-request timeouts."""
+    if os.getenv("PRELOAD_PIPELINE", "true").lower() != "true":
+        return
+    if not os.getenv("RENDER"):
+        return
+    try:
+        get_pipeline()
+        logger.info("RAG pipeline preloaded successfully")
+    except Exception as exc:
+        logger.warning("Pipeline preload failed: %s", exc)
+
+
+preload_pipeline()
 
 
 @app.route("/query", methods=["POST"])
