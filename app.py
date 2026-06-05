@@ -1,8 +1,11 @@
-"""Flask API for the policy RAG assistant."""
+"""Flask web app and API for the policy RAG assistant."""
 
-from flask import Flask, jsonify, request
-from pydantic import BaseModel, Field
+import os
 
+from flask import Flask, jsonify, render_template, request
+from pydantic import BaseModel, Field, model_validator
+
+from src.api_responses import format_chat_response
 from src.ingest import build_vector_store, load_vector_store
 from src.rag_pipeline import PolicyRAGPipeline
 
@@ -10,8 +13,19 @@ app = Flask(__name__)
 _pipeline: PolicyRAGPipeline | None = None
 
 
-class QueryRequest(BaseModel):
-    question: str = Field(..., min_length=1, max_length=1000)
+class ChatRequest(BaseModel):
+    message: str | None = Field(default=None, max_length=1000)
+    question: str | None = Field(default=None, max_length=1000)
+
+    @model_validator(mode="after")
+    def require_message_or_question(self):
+        if not (self.message or self.question):
+            raise ValueError("Provide 'message' or 'question' in the request body.")
+        return self
+
+    @property
+    def text(self) -> str:
+        return (self.message or self.question or "").strip()
 
 
 def get_pipeline() -> PolicyRAGPipeline:
@@ -21,20 +35,31 @@ def get_pipeline() -> PolicyRAGPipeline:
     return _pipeline
 
 
+def reset_pipeline() -> None:
+    """Clear cached pipeline (used in tests)."""
+    global _pipeline
+    _pipeline = None
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok", "service": "policy-rag"})
 
 
-@app.route("/query", methods=["POST"])
-def query():
+@app.route("/chat", methods=["POST"])
+def chat():
     try:
-        payload = QueryRequest.model_validate(request.get_json(force=True))
+        payload = ChatRequest.model_validate(request.get_json(force=True))
     except Exception as exc:
         return jsonify({"error": str(exc)}), 400
 
     try:
-        result = get_pipeline().query(payload.question)
+        result = get_pipeline().query(payload.text)
     except FileNotFoundError:
         return jsonify(
             {
@@ -44,22 +69,13 @@ def query():
     except ValueError as exc:
         return jsonify({"error": str(exc)}), 503
 
-    return jsonify(
-        {
-            "answer": result.answer,
-            "refused": result.refused,
-            "refusal_reason": result.refusal_reason,
-            "citations": [
-                {
-                    "source_id": c.source_id,
-                    "source_title": c.source_title,
-                    "chunk_index": c.chunk_index,
-                    "excerpt": c.excerpt,
-                }
-                for c in result.citations
-            ],
-        }
-    )
+    return jsonify(format_chat_response(result))
+
+
+@app.route("/query", methods=["POST"])
+def query():
+    """Backward-compatible alias for /chat."""
+    return chat()
 
 
 @app.route("/ingest", methods=["POST"])
@@ -76,4 +92,6 @@ def ingest():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.getenv("PORT", "5000"))
+    debug = os.getenv("FLASK_DEBUG", "false").lower() == "true"
+    app.run(host="0.0.0.0", port=port, debug=debug)

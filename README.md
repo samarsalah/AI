@@ -6,11 +6,30 @@ An LLM-powered Retrieval-Augmented Generation (RAG) application that answers use
 
 This project ingests corporate policy documents, chunks and embeds them into a vector store, and uses an LLM to generate accurate, context-grounded answers to employee questions about HR, operations, security, and compliance.
 
+## Live Demo
+
+**Web app:** https://policy-rag-tpok.onrender.com
+
+**Health check:** https://policy-rag-tpok.onrender.com/health
+
+**API example:**
+```bash
+curl -X POST https://policy-rag-tpok.onrender.com/chat \
+  -H "Content-Type: application/json" \
+  -d "{\"message\": \"How many PTO days do new employees get?\"}"
+```
+
+> Free-tier Render services may take 30–60 seconds to wake after idle periods.
+
 ## Project Structure
 
 ```
 AI/
-├── app.py                     # Flask API (/query, /ingest, /health)
+├── app.py                     # Flask web app + API (/chat, /health)
+├── templates/
+│   └── index.html             # Web UI with question input
+├── .github/workflows/ci.yml   # GitHub Actions CI/CD
+├── render.yaml                # Render deployment blueprint
 ├── corpus/                    # Source policy documents (Markdown)
 ├── scripts/
 │   └── ingest_corpus.py       # CLI: parse, chunk, embed, index
@@ -106,6 +125,88 @@ OPENAI_API_KEY=your_key_here
 # OPENROUTER_API_KEY=your_key_here
 ```
 
+## Phase 3: Application & Infrastructure
+
+### Phase 3 Checklist
+
+| Requirement | Status |
+|-------------|--------|
+| Web UI with text input | ✅ `templates/index.html` at `/` |
+| `POST /chat` with answer, snippets, citations | ✅ |
+| `GET /health` JSON status | ✅ |
+| GitHub Actions on push/PR | ✅ `.github/workflows/ci.yml` |
+| Install deps + build/start check in CI | ✅ `pytest` + `scripts/check_build.py` |
+| Optional deployment config | ✅ `render.yaml` + `Procfile` |
+
+### Web interface
+
+```bash
+python app.py
+```
+
+Open http://localhost:5000 — enter a policy question and submit.
+
+### API endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/` | Web UI |
+| GET | `/health` | Health check |
+| POST | `/chat` | Ask a question (returns answer, snippets, citations) |
+| POST | `/query` | Alias for `/chat` |
+| POST | `/ingest` | Rebuild vector index |
+
+**`POST /chat` example:**
+
+```bash
+curl -X POST http://localhost:5000/chat \
+  -H "Content-Type: application/json" \
+  -d "{\"message\": \"How many PTO days do new employees get?\"}"
+```
+
+**Response:**
+
+```json
+{
+  "answer": "Employees with 0–2 years receive 15 PTO days [pto_and_leave_policy].",
+  "refused": false,
+  "refusal_reason": "",
+  "snippets": [
+    {
+      "source_id": "pto_and_leave_policy",
+      "source_title": "Paid Time Off and Leave Policy",
+      "chunk_index": 2,
+      "text": "..."
+    }
+  ],
+  "citations": [
+    {
+      "source_id": "pto_and_leave_policy",
+      "source_title": "Paid Time Off and Leave Policy",
+      "chunk_index": 2
+    }
+  ]
+}
+```
+
+### CI/CD
+
+GitHub Actions runs on every push and pull request to `main`:
+
+1. Installs dependencies from `requirements.txt`
+2. Runs `pytest tests/ -v`
+3. Runs `python scripts/check_build.py` (health, UI, and `/chat` smoke test)
+
+### Deploy to Render (optional)
+
+1. Push this repo to GitHub
+2. Create a new **Web Service** on [Render](https://render.com) and connect the repo
+3. Render will use `render.yaml` automatically, or set manually:
+   - **Build:** `pip install -r requirements.txt && python scripts/ingest_corpus.py`
+   - **Start:** `gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120`
+4. Add environment variables: `GROQ_API_KEY`, `LLM_PROVIDER=groq`
+5. Deploy — live at https://policy-rag-tpok.onrender.com
+
 ## Phase 2 — Process, Index & Query
 
 ### 1. Index the corpus
@@ -161,14 +262,6 @@ Example response:
 | **Scope guardrail** | Keyword filter + minimum relevance score (0.25) |
 | **Out-of-scope refusal** | Returns standard refusal message without calling LLM |
 | **Output length limit** | Max 300 words / 512 tokens |
-
-## API Endpoints
-
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/health` | Health check |
-| POST | `/query` | Ask a policy question |
-| POST | `/ingest` | Rebuild vector index from corpus |
 
 ## Run Tests
 

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy Assistant</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --text: #1a2332;
+      --muted: #5c6b7a;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --border: #e2e8f0;
+      --snippet-bg: #f8fafc;
+      --refused: #b45309;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    header { margin-bottom: 1.5rem; }
+    h1 { margin: 0 0 0.35rem; font-size: 1.75rem; }
+    .subtitle { color: var(--muted); margin: 0; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: inherit;
+      resize: vertical;
+    }
+    textarea:focus {
+      outline: 2px solid var(--accent);
+      border-color: var(--accent);
+    }
+    .actions { margin-top: 0.75rem; display: flex; gap: 0.75rem; align-items: center; }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 1.25rem;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: var(--accent-hover); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    #status { color: var(--muted); font-size: 0.9rem; }
+    #results { margin-top: 1.25rem; display: none; }
+    #results.visible { display: block; }
+    .answer {
+      white-space: pre-wrap;
+      padding: 1rem;
+      background: var(--snippet-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .refused { color: var(--refused); font-weight: 600; }
+    .section-title {
+      margin: 1.25rem 0 0.5rem;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+    .snippet, .citation {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin-bottom: 0.65rem;
+      background: var(--card);
+    }
+    .snippet-meta, .citation-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+    .snippet-text { font-size: 0.95rem; }
+    .error {
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 0.85rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Corporate Policy Assistant</h1>
+      <p class="subtitle">Ask questions about HR, remote work, expenses, security, and conduct policies.</p>
+    </header>
+
+    <div class="card">
+      <label for="question">Your question</label>
+      <textarea id="question" placeholder="e.g. How many PTO days do new employees receive?"></textarea>
+      <div class="actions">
+        <button id="askBtn" type="button">Ask</button>
+        <span id="status"></span>
+      </div>
+    </div>
+
+    <div id="results" class="card">
+      <div class="section-title">Answer</div>
+      <div id="answer" class="answer"></div>
+      <div class="section-title">Source snippets</div>
+      <div id="snippets"></div>
+      <div class="section-title">Citations</div>
+      <div id="citations"></div>
+    </div>
+  </div>
+
+  <script>
+    const questionEl = document.getElementById("question");
+    const askBtn = document.getElementById("askBtn");
+    const statusEl = document.getElementById("status");
+    const resultsEl = document.getElementById("results");
+    const answerEl = document.getElementById("answer");
+    const snippetsEl = document.getElementById("snippets");
+    const citationsEl = document.getElementById("citations");
+
+    async function askQuestion() {
+      const message = questionEl.value.trim();
+      if (!message) {
+        statusEl.textContent = "Please enter a question.";
+        return;
+      }
+
+      askBtn.disabled = true;
+      statusEl.textContent = "Thinking...";
+      resultsEl.classList.remove("visible");
+
+      try {
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message }),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Request failed");
+        }
+
+        answerEl.textContent = data.answer;
+        answerEl.classList.toggle("refused", data.refused);
+
+        snippetsEl.innerHTML = (data.snippets || []).map((s) => `
+          <div class="snippet">
+            <div class="snippet-meta">${s.source_title} [${s.source_id}] · chunk ${s.chunk_index}</div>
+            <div class="snippet-text">${s.text}</div>
+          </div>
+        `).join("") || "<p class='subtitle'>No snippets retrieved.</p>";
+
+        citationsEl.innerHTML = (data.citations || []).map((c) => `
+          <div class="citation">
+            <div class="citation-meta">${c.source_title}</div>
+            <div>ID: <code>${c.source_id}</code> · chunk ${c.chunk_index}</div>
+          </div>
+        `).join("") || "<p class='subtitle'>No citations.</p>";
+
+        resultsEl.classList.add("visible");
+        statusEl.textContent = data.refused ? "Outside policy scope" : "Done";
+      } catch (err) {
+        resultsEl.classList.add("visible");
+        answerEl.innerHTML = `<div class="error">${err.message}</div>`;
+        snippetsEl.innerHTML = "";
+        citationsEl.innerHTML = "";
+        statusEl.textContent = "Error";
+      } finally {
+        askBtn.disabled = false;
+      }
+    }
+
+    askBtn.addEventListener("click", askQuestion);
+    questionEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) askQuestion();
+    });
+  </script>
+</body>
+</html>
