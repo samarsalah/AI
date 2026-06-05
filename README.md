@@ -74,10 +74,14 @@ The `corpus/` directory contains nine corporate policy documents (Markdown and H
 - Git
 - An LLM API key (OpenAI, Groq, or OpenRouter)
 
+## Repository
+
+https://github.com/samarsalah/AI
+
 ## Installation
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/samarsalah/AI.git
 cd AI
 
 python -m venv venv
