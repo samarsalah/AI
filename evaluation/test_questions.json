@@ -1,0 +1,146 @@
+[
+  {
+    "id": "q01",
+    "question": "How many PTO days do employees with 0-2 years of tenure receive?",
+    "category": "in_scope",
+    "expected_sources": ["pto_and_leave_policy"]
+  },
+  {
+    "id": "q02",
+    "question": "What is the sick leave allocation per year?",
+    "category": "in_scope",
+    "expected_sources": ["pto_and_leave_policy"]
+  },
+  {
+    "id": "q03",
+    "question": "How long is primary caregiver parental leave?",
+    "category": "in_scope",
+    "expected_sources": ["pto_and_leave_policy"]
+  },
+  {
+    "id": "q04",
+    "question": "What are the core hours for remote employees?",
+    "category": "in_scope",
+    "expected_sources": ["remote_work_policy"]
+  },
+  {
+    "id": "q05",
+    "question": "What is the monthly remote work stipend for fully remote employees?",
+    "category": "in_scope",
+    "expected_sources": ["remote_work_policy"]
+  },
+  {
+    "id": "q06",
+    "question": "Is VPN required when accessing internal applications from home?",
+    "category": "in_scope",
+    "expected_sources": ["remote_work_policy", "information_security"]
+  },
+  {
+    "id": "q07",
+    "question": "What is the nightly lodging cap for individual contributors traveling domestically?",
+    "category": "in_scope",
+    "expected_sources": ["expense_reimbursement"]
+  },
+  {
+    "id": "q08",
+    "question": "What is the daily meal cap for dinner while traveling domestically?",
+    "category": "in_scope",
+    "expected_sources": ["expense_reimbursement"]
+  },
+  {
+    "id": "q09",
+    "question": "How soon must expense reports be submitted?",
+    "category": "in_scope",
+    "expected_sources": ["expense_reimbursement"]
+  },
+  {
+    "id": "q10",
+    "question": "How often must standard user passwords be rotated?",
+    "category": "in_scope",
+    "expected_sources": ["information_security"]
+  },
+  {
+    "id": "q11",
+    "question": "Is MFA required for email and VPN access?",
+    "category": "in_scope",
+    "expected_sources": ["information_security"]
+  },
+  {
+    "id": "q12",
+    "question": "What is the clean desk screen lock timeout?",
+    "category": "in_scope",
+    "expected_sources": ["information_security"]
+  },
+  {
+    "id": "q13",
+    "question": "How do employees report harassment or discrimination?",
+    "category": "in_scope",
+    "expected_sources": ["code_of_conduct"]
+  },
+  {
+    "id": "q14",
+    "question": "What is the maximum gift value employees may accept from vendors per year?",
+    "category": "in_scope",
+    "expected_sources": ["code_of_conduct"]
+  },
+  {
+    "id": "q15",
+    "question": "What is the company 401k match?",
+    "category": "in_scope",
+    "expected_sources": ["benefits_and_compensation_policy"]
+  },
+  {
+    "id": "q16",
+    "question": "How many SMART goals must each employee have?",
+    "category": "in_scope",
+    "expected_sources": ["performance_management_policy"]
+  },
+  {
+    "id": "q17",
+    "question": "How long do we have to respond to a GDPR data subject request?",
+    "category": "in_scope",
+    "expected_sources": ["data_privacy_policy"]
+  },
+  {
+    "id": "q18",
+    "question": "Is cryptocurrency mining allowed on company devices?",
+    "category": "in_scope",
+    "expected_sources": ["acceptable_use_policy"]
+  },
+  {
+    "id": "q19",
+    "question": "What bereavement leave is provided for immediate family?",
+    "category": "in_scope",
+    "expected_sources": ["pto_and_leave_policy"]
+  },
+  {
+    "id": "q20",
+    "question": "What travel approval tier applies to trips estimated at $3,000?",
+    "category": "in_scope",
+    "expected_sources": ["expense_reimbursement"]
+  },
+  {
+    "id": "q21",
+    "question": "What is the capital of France?",
+    "category": "out_of_scope",
+    "expected_sources": []
+  },
+  {
+    "id": "q22",
+    "question": "Write me a Python script to scrape websites.",
+    "category": "out_of_scope",
+    "expected_sources": []
+  },
+  {
+    "id": "q23",
+    "question": "What is the weather in New York today?",
+    "category": "out_of_scope",
+    "expected_sources": []
+  },
+  {
+    "id": "q24",
+    "question": "Who won the last Super Bowl?",
+    "category": "out_of_scope",
+    "expected_sources": []
+  }
+]

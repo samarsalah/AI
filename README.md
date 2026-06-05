@@ -263,6 +263,20 @@ Example response:
 | **Out-of-scope refusal** | Returns standard refusal message without calling LLM |
 | **Output length limit** | Max 300 words / 512 tokens |
 
+## Phase 4 — Evaluation & Documentation
+
+| Requirement | Status | Location |
+|-------------|--------|----------|
+| Test set (15–30 questions) | ✅ 24 questions | `evaluation/test_questions.json` |
+| Groundedness + citation metrics | ✅ | `evaluation/results.json` |
+| Latency p50/p95 | ✅ p50=1,083ms, p95=7,793ms | `scripts/run_evaluation.py` |
+| Architecture + evaluation doc | ✅ | `design-and-evaluation.md` |
+| AI tooling doc | ✅ | `ai-tooling.md` |
+
+```bash
+EMBEDDING_BACKEND=onnx python scripts/run_evaluation.py
+```
+
 ## Run Tests
 
 ```bash

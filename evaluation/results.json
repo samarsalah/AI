@@ -1,0 +1,578 @@
+{
+  "summary": {
+    "total_questions": 24,
+    "in_scope_questions": 20,
+    "out_of_scope_questions": 4,
+    "groundedness_pct": 100.0,
+    "citation_validity_pct": 100.0,
+    "citation_retrieval_alignment_pct": 85.0,
+    "citation_expected_source_pct": 100.0,
+    "refusal_accuracy_pct": 100.0,
+    "latency_ms": {
+      "sample_size": 17,
+      "p50": 1082.5,
+      "p95": 7793.1,
+      "mean": 2693.2,
+      "min": 366.8,
+      "max": 7849.9
+    }
+  },
+  "results": [
+    {
+      "id": "q01",
+      "question": "How many PTO days do employees with 0-2 years of tenure receive?",
+      "category": "in_scope",
+      "latency_ms": 1082.5,
+      "refused": false,
+      "answer_preview": "Employees with 0-2 years of tenure receive 15 PTO days [pto_and_leave_policy]. This accrues per pay period, with 4.62 hours accrued biweekly [pto_and_leave_policy].",
+      "cited_source_ids": [
+        "pto_and_leave_policy"
+      ],
+      "retrieved_source_ids": [
+        "pto_and_leave_policy"
+      ],
+      "expected_sources": [
+        "pto_and_leave_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q02",
+      "question": "What is the sick leave allocation per year?",
+      "category": "in_scope",
+      "latency_ms": 374.5,
+      "refused": false,
+      "answer_preview": "All eligible employees receive 10 sick days (80 hours) per accrual year, front-loaded on January 1 (or hire date anniversary for employees in states requiring accrual-based sick le",
+      "cited_source_ids": [
+        "pto_and_leave_policy"
+      ],
+      "retrieved_source_ids": [
+        "benefits_and_compensation_policy",
+        "pto_and_leave_policy"
+      ],
+      "expected_sources": [
+        "pto_and_leave_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q03",
+      "question": "How long is primary caregiver parental leave?",
+      "category": "in_scope",
+      "latency_ms": 366.8,
+      "refused": false,
+      "answer_preview": "Primary caregiver parental leave is 12 weeks [pto_and_leave_policy]. The pay for this leave is 100% base salary for the first 8 weeks and 60% for weeks 9-12 [pto_and_leave_policy].",
+      "cited_source_ids": [
+        "pto_and_leave_policy"
+      ],
+      "retrieved_source_ids": [
+        "pto_and_leave_policy"
+      ],
+      "expected_sources": [
+        "pto_and_leave_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q04",
+      "question": "What are the core hours for remote employees?",
+      "category": "in_scope",
+      "latency_ms": 425.5,
+      "refused": false,
+      "answer_preview": "The core hours for remote employees are 10:00 AM \u2013 3:00 PM in their assigned time zone [remote_work_policy]. This means that all remote employees must be available during these hou",
+      "cited_source_ids": [
+        "remote_work_policy"
+      ],
+      "retrieved_source_ids": [
+        "remote_work_policy"
+      ],
+      "expected_sources": [
+        "remote_work_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q05",
+      "question": "What is the monthly remote work stipend for fully remote employees?",
+      "category": "in_scope",
+      "latency_ms": 382.3,
+      "refused": false,
+      "answer_preview": "The monthly remote work stipend for fully remote employees is $75/month [remote_work_policy]. This stipend is intended for internet, utilities, and incidental home office costs [re",
+      "cited_source_ids": [
+        "remote_work_policy"
+      ],
+      "retrieved_source_ids": [
+        "expense_reimbursement",
+        "remote_work_policy"
+      ],
+      "expected_sources": [
+        "remote_work_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q06",
+      "question": "Is VPN required when accessing internal applications from home?",
+      "category": "in_scope",
+      "latency_ms": 25.2,
+      "refused": true,
+      "answer_preview": "I can only answer questions about the corporate policies in our knowledge base (PTO & leave, remote work, expense reimbursement, information security, and code of conduct). Your qu",
+      "cited_source_ids": [],
+      "retrieved_source_ids": [],
+      "expected_sources": [
+        "information_security",
+        "remote_work_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": false,
+        "citation_expected_pass": true,
+        "refusal_pass": false
+      }
+    },
+    {
+      "id": "q07",
+      "question": "What is the nightly lodging cap for individual contributors traveling domestically?",
+      "category": "in_scope",
+      "latency_ms": 409.2,
+      "refused": false,
+      "answer_preview": "The nightly lodging cap for individual contributors traveling domestically is $200 [expense_reimbursement]. This cap includes taxes and fees, and lodging must be booked through Con",
+      "cited_source_ids": [
+        "expense_reimbursement"
+      ],
+      "retrieved_source_ids": [
+        "expense_reimbursement"
+      ],
+      "expected_sources": [
+        "expense_reimbursement"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q08",
+      "question": "What is the daily meal cap for dinner while traveling domestically?",
+      "category": "in_scope",
+      "latency_ms": 495.4,
+      "refused": false,
+      "answer_preview": "The daily meal cap for dinner while traveling domestically is $60 [expense_reimbursement]. This is part of the daily meal caps outlined in the Expense Reimbursement Policy, which a",
+      "cited_source_ids": [
+        "expense_reimbursement"
+      ],
+      "retrieved_source_ids": [
+        "expense_reimbursement",
+        "pto_and_leave_policy"
+      ],
+      "expected_sources": [
+        "expense_reimbursement"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q09",
+      "question": "How soon must expense reports be submitted?",
+      "category": "in_scope",
+      "latency_ms": 420.4,
+      "refused": false,
+      "answer_preview": "Expense reports must be submitted within 30 calendar days of incurring the expense [expense_reimbursement]. Additionally, when logging the expense in Concur Expense, it should be d",
+      "cited_source_ids": [
+        "expense_reimbursement"
+      ],
+      "retrieved_source_ids": [
+        "code_of_conduct",
+        "expense_reimbursement",
+        "pto_and_leave_policy"
+      ],
+      "expected_sources": [
+        "expense_reimbursement"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q10",
+      "question": "How often must standard user passwords be rotated?",
+      "category": "in_scope",
+      "latency_ms": 425.4,
+      "refused": false,
+      "answer_preview": "Standard user passwords must be rotated every **90 days** (or upon suspected compromise) [information_security]. This rotation frequency is specified in the password rotation polic",
+      "cited_source_ids": [
+        "information_security"
+      ],
+      "retrieved_source_ids": [
+        "information_security",
+        "remote_work_policy"
+      ],
+      "expected_sources": [
+        "information_security"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q11",
+      "question": "Is MFA required for email and VPN access?",
+      "category": "in_scope",
+      "latency_ms": 4758.2,
+      "refused": false,
+      "answer_preview": "Yes, MFA is required for email and VPN access [information_security]. Specifically, MFA is mandatory for email and calendar (Microsoft 365) and VPN and zero-trust network access (Z",
+      "cited_source_ids": [
+        "information_security",
+        "remote_work_policy"
+      ],
+      "retrieved_source_ids": [
+        "acceptable_use_policy",
+        "information_security",
+        "remote_work_policy"
+      ],
+      "expected_sources": [
+        "information_security"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q12",
+      "question": "What is the clean desk screen lock timeout?",
+      "category": "in_scope",
+      "latency_ms": 0.0,
+      "refused": true,
+      "answer_preview": "I can only answer questions about the corporate policies in our knowledge base (PTO & leave, remote work, expense reimbursement, information security, and code of conduct). Your qu",
+      "cited_source_ids": [],
+      "retrieved_source_ids": [],
+      "expected_sources": [
+        "information_security"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": false,
+        "citation_expected_pass": true,
+        "refusal_pass": false
+      }
+    },
+    {
+      "id": "q13",
+      "question": "How do employees report harassment or discrimination?",
+      "category": "in_scope",
+      "latency_ms": 4648.6,
+      "refused": false,
+      "answer_preview": "Employees can report harassment or discrimination through various channels, including their direct supervisor (Manager) for initial concerns and guidance [code_of_conduct], HR at h",
+      "cited_source_ids": [
+        "code_of_conduct"
+      ],
+      "retrieved_source_ids": [
+        "code_of_conduct"
+      ],
+      "expected_sources": [
+        "code_of_conduct"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q14",
+      "question": "What is the maximum gift value employees may accept from vendors per year?",
+      "category": "in_scope",
+      "latency_ms": 5635.3,
+      "refused": false,
+      "answer_preview": "According to the Code of Conduct policy [code_of_conduct], employees may not accept gifts over $100 aggregate per vendor per year. This means that the total value of gifts from a s",
+      "cited_source_ids": [
+        "code_of_conduct"
+      ],
+      "retrieved_source_ids": [
+        "code_of_conduct",
+        "expense_reimbursement",
+        "pto_and_leave_policy"
+      ],
+      "expected_sources": [
+        "code_of_conduct"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q15",
+      "question": "What is the company 401k match?",
+      "category": "in_scope",
+      "latency_ms": 27.0,
+      "refused": true,
+      "answer_preview": "I can only answer questions about the corporate policies in our knowledge base (PTO & leave, remote work, expense reimbursement, information security, and code of conduct). Your qu",
+      "cited_source_ids": [],
+      "retrieved_source_ids": [],
+      "expected_sources": [
+        "benefits_and_compensation_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": false,
+        "citation_expected_pass": true,
+        "refusal_pass": false
+      }
+    },
+    {
+      "id": "q16",
+      "question": "How many SMART goals must each employee have?",
+      "category": "in_scope",
+      "latency_ms": 3632.8,
+      "refused": false,
+      "answer_preview": "Each employee must have **3\u20135 measurable goals** that follow SMART criteria [performance_management_policy]. These goals should be set by January 31 and approved by their manager [",
+      "cited_source_ids": [
+        "performance_management_policy"
+      ],
+      "retrieved_source_ids": [
+        "performance_management_policy"
+      ],
+      "expected_sources": [
+        "performance_management_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q17",
+      "question": "How long do we have to respond to a GDPR data subject request?",
+      "category": "in_scope",
+      "latency_ms": 7849.9,
+      "refused": false,
+      "answer_preview": "According to the Data Privacy Policy [data_privacy_policy], the company has **30 days** to respond to a Data Subject Request (DSR), with the possibility of an extension to **45 day",
+      "cited_source_ids": [
+        "data_privacy_policy"
+      ],
+      "retrieved_source_ids": [
+        "data_privacy_policy",
+        "remote_work_policy"
+      ],
+      "expected_sources": [
+        "data_privacy_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q18",
+      "question": "Is cryptocurrency mining allowed on company devices?",
+      "category": "in_scope",
+      "latency_ms": 1529.0,
+      "refused": false,
+      "answer_preview": "Cryptocurrency mining is not allowed on company devices [code_of_conduct]. This is also reinforced by the Acceptable Use Policy, which explicitly prohibits cryptocurrency mining [a",
+      "cited_source_ids": [
+        "acceptable_use_policy",
+        "code_of_conduct"
+      ],
+      "retrieved_source_ids": [
+        "acceptable_use_policy",
+        "code_of_conduct",
+        "remote_work_policy"
+      ],
+      "expected_sources": [
+        "acceptable_use_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q19",
+      "question": "What bereavement leave is provided for immediate family?",
+      "category": "in_scope",
+      "latency_ms": 5569.9,
+      "refused": false,
+      "answer_preview": "For immediate family, which includes spouse, partner, child, parent, and sibling, the company provides 5 paid days of bereavement leave [pto_and_leave_policy].",
+      "cited_source_ids": [
+        "pto_and_leave_policy"
+      ],
+      "retrieved_source_ids": [
+        "pto_and_leave_policy"
+      ],
+      "expected_sources": [
+        "pto_and_leave_policy"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q20",
+      "question": "What travel approval tier applies to trips estimated at $3,000?",
+      "category": "in_scope",
+      "latency_ms": 7778.9,
+      "refused": false,
+      "answer_preview": "The travel approval tier that applies to trips estimated at $3,000 is Tier 2 [expense_reimbursement]. According to the policy, Tier 2 requires approval from a Director and has a le",
+      "cited_source_ids": [
+        "expense_reimbursement"
+      ],
+      "retrieved_source_ids": [
+        "expense_reimbursement"
+      ],
+      "expected_sources": [
+        "expense_reimbursement"
+      ],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": true,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q21",
+      "question": "What is the capital of France?",
+      "category": "out_of_scope",
+      "latency_ms": 0.0,
+      "refused": true,
+      "answer_preview": "I can only answer questions about the corporate policies in our knowledge base (PTO & leave, remote work, expense reimbursement, information security, and code of conduct). Your qu",
+      "cited_source_ids": [],
+      "retrieved_source_ids": [],
+      "expected_sources": [],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": false,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q22",
+      "question": "Write me a Python script to scrape websites.",
+      "category": "out_of_scope",
+      "latency_ms": 0.0,
+      "refused": true,
+      "answer_preview": "I can only answer questions about the corporate policies in our knowledge base (PTO & leave, remote work, expense reimbursement, information security, and code of conduct). Your qu",
+      "cited_source_ids": [],
+      "retrieved_source_ids": [],
+      "expected_sources": [],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": false,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q23",
+      "question": "What is the weather in New York today?",
+      "category": "out_of_scope",
+      "latency_ms": 0.0,
+      "refused": true,
+      "answer_preview": "I can only answer questions about the corporate policies in our knowledge base (PTO & leave, remote work, expense reimbursement, information security, and code of conduct). Your qu",
+      "cited_source_ids": [],
+      "retrieved_source_ids": [],
+      "expected_sources": [],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": false,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    },
+    {
+      "id": "q24",
+      "question": "Who won the last Super Bowl?",
+      "category": "out_of_scope",
+      "latency_ms": 0.0,
+      "refused": true,
+      "answer_preview": "I can only answer questions about the corporate policies in our knowledge base (PTO & leave, remote work, expense reimbursement, information security, and code of conduct). Your qu",
+      "cited_source_ids": [],
+      "retrieved_source_ids": [],
+      "expected_sources": [],
+      "metrics": {
+        "groundedness_pass": true,
+        "citation_valid_pass": true,
+        "citation_retrieval_pass": false,
+        "citation_expected_pass": true,
+        "refusal_pass": true
+      }
+    }
+  ]
+}
