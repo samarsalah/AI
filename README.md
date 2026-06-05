@@ -203,7 +203,7 @@ GitHub Actions runs on every push and pull request to `main`:
 2. Create a new **Web Service** on [Render](https://render.com) and connect the repo
 3. Render will use `render.yaml` automatically, or set manually:
    - **Build:** `pip install -r requirements.txt && python scripts/ingest_corpus.py`
-   - **Start:** `gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120`
+   - **Start:** `python -m gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1`
 4. Add environment variables: `GROQ_API_KEY`, `LLM_PROVIDER=groq`
 5. Deploy — live at https://policy-rag-tpok.onrender.com
 
